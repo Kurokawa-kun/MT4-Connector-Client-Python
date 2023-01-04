@@ -1,0 +1,23 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32505.173
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "MT4-Connector-Client-Python", "MT4-Connector-Client-Python.pyproj", "{BE91F216-CB54-42F6-9910-CC7B241C0A51}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BE91F216-CB54-42F6-9910-CC7B241C0A51}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE91F216-CB54-42F6-9910-CC7B241C0A51}.Release|Any CPU.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {ADD419CD-D4DE-434E-8BE1-652ECDA545B5}
+	EndGlobalSection
+EndGlobal
