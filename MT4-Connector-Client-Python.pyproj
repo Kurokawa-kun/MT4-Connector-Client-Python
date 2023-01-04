@@ -4,7 +4,8 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>be91f216-cb54-42f6-9910-cc7b241c0a51</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>MT4_Connector_Client_Python.py</StartupFile>
+    <StartupFile>
+    </StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -21,7 +22,18 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="MT4_Connector_Client_Python.py" />
+    <Compile Include="AccountInfo.py" />
+    <Compile Include="color.py" />
+    <Compile Include="Connector.py" />
+    <Compile Include="DataGram.py" />
+    <Compile Include="FuncInfo.py" />
+    <Compile Include="MarketInfo.py" />
+    <Compile Include="Message.py" />
+    <Compile Include="MQLInfo.py" />
+    <Compile Include="MT4Runtime.py" />
+    <Compile Include="MyApp1.py" />
+    <Compile Include="ObjectInfo.py" />
+    <Compile Include="PipeClient.py" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
