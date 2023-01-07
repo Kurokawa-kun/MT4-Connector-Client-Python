@@ -25,6 +25,7 @@ class MyApp1(Connector):
         t = self.OrderSend(self.Symbol(), MT4Runtime.OrderType.OP_BUY, 1.00, self.Ask, 0, self.Ask - 100 * self.Point(), self.Ask + 250 * self.Point(), 'comment here', 15, datetime.datetime(3000, 1, 1, 0, 0, 0), color(0, 0, 0, 0)) #  成行注文
         if t == -1:
             print("OrderSendが失敗しました。エラーコードは'{:d}'".format(self.GetLastError()))
+            return
         print("チケット番号は'{:d}'。".format(t))
         self.ExpertRemove() #  プログラムの終了
         return
