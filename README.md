@@ -1,4 +1,4 @@
-#MT4-Connector-Client-Python
+# MT4-Connector-Client-Python
 ## 説明
 MT4を外部のプログラムからコントロールするための制御基盤です。  
 ここで公開しているのはPythonのクライアント機能です。  
