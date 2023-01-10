@@ -1,5 +1,7 @@
 ﻿import sys
 import inspect
+import signal
+import threading
 import datetime
 import color
 import PipeClient
@@ -12,9 +14,10 @@ frame = inspect.currentframe().f_back
     
 class Connector:
     DebugMode = False
+    PipeLock = None
 
     def OnPreInit(self, debug : bool):
-        DebugMode = debug
+        self.DebugMode = debug
         return
     def OnInit(self) -> int:
         return MT4Runtime.INIT_SUCCEEDED
@@ -1000,7 +1003,7 @@ class Connector:
                 funcInfoReceived.FuncName = r.Data[1].GetDataString()
                 PosParameter = 0
             elif r.GetMessageType() == Message.MSG_PARAMETER:
-                self.PrintDebugMessage('MSG_PARAMETER受信を受信しました')
+                self.PrintDebugMessage('MSG_PARAMETERを受信しました')
                 s.Clear()
                 s.SetMessageType(Message.MSG_REQUEST_PARAMETER)
                 r.Data[1].CopyDataGramTo(funcInfoReceived.Parameter[PosParameter])
@@ -1036,22 +1039,35 @@ class Connector:
         self.PrintDebugMessage('リクエスト情報の送受信を行いました。')
         return True
     
+    # シャットダウンシーケンス
+    def Shutdown(self):
+        print('Ctrl+Cが押されました。サーバにOnDeinitの呼出依頼を発行します。')
+        self.FlagEmergencyStop = True        
+        if self.PipeLock.acquire():
+            pass
+    
+    # シャットダウンシーケンスを別スレッドで起動する
+    def StartShutdownSequence(self, signal, frame):
+	    threading.Thread(target=self.Shutdown).start()
+
     # コンストラクタ
     def __init__(self):
         self.Pipe = PipeClient.PipeClient()
+        self.PipeLock = threading.Lock()
     
     def ConnectToMT4(self, PipeName : str):
         self.FlagEmergencyStop = False  # サーバーの停止等によりメッセージの送受信ができなくなった場合
         #protected HashMap<String/*通貨ペア*/, HashMap<Integer/*時間足*/, TickData>> ChartData = new HashMap<>(100)
         
         filename = '\\\\.\\pipe\\' + PipeName
-        self.Pipe.ConnectToServer(PipeName)
-        # ！ここにctrl+C押下時のシャットダウン処理を追加する必要がある
         
+        self.PipeLock.acquire()
+        signal.signal(signal.SIGINT, self.StartShutdownSequence)
+        self.Pipe.ConnectToServer(PipeName)        
         fi = FuncInfo()
         fi.FuncName = None
         self.SendReceiveRequest(fi)
-
+        self.PipeLock.release()
         self.PrintDebugMessage('リクエストの送受信がすべて終わりました。プログラムを終了します。')
         
         self.PrintDebugMessage('サーバーとの接続を切断します。')
